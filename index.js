@@ -8,6 +8,12 @@ app.use(express.static("public"));
 //Serves all the request which includes /images in the url from Images folder
 app.use("/images", express.static(__dirname + "/images"));
 
+app.get("/", async (req, res) => {
+  res.send({
+    message: "Hello World",
+  });
+});
+
 app.get("/screenshot", async (req, res) => {
   const browser = await puppeteer.launch({
     defaultViewport: { width: 904, height: 1350 },
