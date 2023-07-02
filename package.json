@@ -13,7 +13,6 @@
   "author": "jane hernandez",
   "license": "ISC",
   "dependencies": {
-    "chromium": "^3.0.3",
     "express": "^4.18.2",
     "puppeteer": "^19.11.1"
   }
