@@ -32,6 +32,8 @@ app.get("/screenshot", async (req, res) => {
       selector = "body";
     }
 
+    const url = req.query.dev ? "https://google.com" : req.query.url;
+
     if (!req.query.dev) {
       await page.evaluateOnNewDocument((token) => {
         localStorage.clear();
@@ -39,7 +41,6 @@ app.get("/screenshot", async (req, res) => {
       }, req.query.auth_info);
     }
 
-    const url = req.query.dev ? "https://google.com" : req.query.url;
     await page.goto(url, {
       waitUntil: "networkidle0",
     });
@@ -93,7 +94,6 @@ app.get("/screenshot", async (req, res) => {
     ]);
 
     await new Promise((resolve) => setTimeout(resolve, 3000));
-    // const boundingBox = await element.boundingBox();
 
     // Evaluate element selector
     const boundingBox = await page.evaluate((element) => {
@@ -101,13 +101,9 @@ app.get("/screenshot", async (req, res) => {
       return { left: x, top: y, width, height };
     }, element);
 
-    const name = req.query.name;
     const timestamp = Math.floor(Date.now() / 1000);
-
-    const filename = `${name}_${timestamp}.png`;
-
     await page.screenshot({
-      path: `public/images/${filename}`,
+      path: `public/images/${timestamp}.png`,
       clip: {
         x: boundingBox.left - 32,
         y: boundingBox.top - 32,
@@ -119,11 +115,11 @@ app.get("/screenshot", async (req, res) => {
     await browser.close();
 
     res.send({
-      path: `/images/${filename}`,
+      path: `/images/${timestamp}.png`,
     });
   } catch (error) {
     await browser.close();
-    res.send({
+    res.status(500).send({
       message: "please try again",
       error,
     });
