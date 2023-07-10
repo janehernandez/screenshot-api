@@ -1,7 +1,7 @@
 {
   "name": "screenshot",
   "version": "1.0.0",
-  "description": "screenshots specific html area",
+  "description": "A free project intended for company use (sana magbayad sila)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,9 +10,10 @@
     "screenshot",
     "plugin"
   ],
-  "author": "jane hernandez",
+  "author": "Jane Hernandez <kitkatdonat@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "puppeteer": "^19.11.1"
   }

@@ -1,12 +1,28 @@
 const express = require("express");
 const puppeteer = require("puppeteer");
-
+const cors = require("cors");
 const app = express();
 
 app.use(express.static("public"));
+app.use(
+  cors({
+    origin: "*",
+    allowedHeaders: "*",
+  })
+);
 
 //Serves all the request which includes /images in the url from Images folder
 app.use("/images", express.static(__dirname + "/images"));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 app.get("/", async (req, res) => {
   res.send({
@@ -115,9 +131,11 @@ app.get("/screenshot", async (req, res) => {
     await browser.close();
 
     res.send({
-      path: `/images/${timestamp}.png`,
+      path: `https://${req.hostname}/images/${timestamp}.png`,
+      name: `${timestamp}.png`,
     });
   } catch (error) {
+    console.log(error);
     await browser.close();
     res.status(500).send({
       message: "please try again",
