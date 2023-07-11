@@ -1,4 +1,4 @@
-# (screenshot-ui)
+# (screenshot-api)
 
 Free API Receiver for the screenshot for the company
 
