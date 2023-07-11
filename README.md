@@ -1,6 +1,6 @@
 # (screenshot-ui)
 
-API Receiver for the screenshot
+Free API Receiver for the screenshot for the company (without payment pero ung management kupal)
 
 ## Install the dependencies
 ```bash
